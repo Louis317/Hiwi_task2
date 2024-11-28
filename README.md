@@ -147,7 +147,8 @@ x_stats = [4, 7]
 robust_student.integral_problem(x_range, x_stats, plot_derivative=True)
 ```
 
-![Figure_1](/Users/spaceraven/Developer/Git/Python_HiWi/code/task_2/README.assets/Figure_1.png)
+![Figure_1](https://github.com/user-attachments/assets/e86ef0e0-2404-422e-aeb8-8a1b0862549f)
+
 
 ```bash
 | Metric                         |       Value |
