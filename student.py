@@ -4,18 +4,24 @@ from scipy import stats
 from tabulate import tabulate
 import datetime
 
+
 def main():
-    student = RobustDataScienceStudent("Bob", 24, "01-10-2023", "AI", "654321", ["Convex", "ML", "DSP", "DSP Lab", "Matrix"], "AI")
+    student = RobustDataScienceStudent(
+        "Bob",
+        24,
+        "01-10-2023",
+        "AI",
+        "654321",
+        ["Convex", "ML", "DSP", "DSP Lab", "Matrix"],
+        "AI",
+    )
 
     student.solve_integral_problem(
         x_range=(0, 12), x_stats=[4, 7], plot_derivative=False
     )
 
-    student.solve_linear_system(A=[[3, 2, 3, 10],
-                                              [2, -2, 5, 8],
-                                              [3, 3, 4, 9],
-                                              [3, 4, -3, -7]],
-                                              b=[4, 1, 3, 2]
+    student.solve_linear_system(
+        A=[[3, 2, 3, 10], [2, -2, 5, 8], [3, 3, 4, 9], [3, 4, -3, -7]], b=[4, 1, 3, 2]
     )
     # np.random.seed(42)
     # X = np.random.rand(10, 3)
@@ -26,15 +32,28 @@ def main():
     student.solve_least_squares(X, y, print_results=True)
 
 
-
 class TUDarmstadtStudent:
     """Class representing a TU Darmstadt student."""
-    def __init__(self, name, age, registration_date, study_program, reg_number, courses, favorite_course):
+
+    def __init__(
+        self,
+        name,
+        age,
+        registration_date,
+        study_program,
+        reg_number,
+        courses,
+        favorite_course,
+    ):
         if not isinstance(name, str):
             raise ValueError("Name must be a string.")
         if not isinstance(age, int):
             raise ValueError("Age must be an integer.")
-        if not isinstance(courses, list) or not all(isinstance(course, str) for course in courses) or len(courses) != 5:
+        if (
+            not isinstance(courses, list)
+            or not all(isinstance(course, str) for course in courses)
+            or len(courses) != 5
+        ):
             raise ValueError("Courses must be a list of 5 strings.")
         if not isinstance(favorite_course, str):
             raise ValueError("Favorite course must be a single string.")
@@ -94,9 +113,13 @@ class RobustDataScienceStudent(TUDarmstadtStudent):
 
     def solve_integral_problem(self, x_range, x_stats, plot_derivative=False):
         try:
-            if not isinstance(x_range, (list, tuple)) or not all(isinstance(i, (int, float)) for i in x_range):
+            if not isinstance(x_range, (list, tuple)) or not all(
+                isinstance(i, (int, float)) for i in x_range
+            ):
                 raise ValueError("x_range must be a list or tuple of numbers.")
-            if not isinstance(x_stats, (list, tuple)) or not all(isinstance(i, (int, float)) for i in x_stats):
+            if not isinstance(x_stats, (list, tuple)) or not all(
+                isinstance(i, (int, float)) for i in x_stats
+            ):
                 raise ValueError("x_stats must be a list or tuple of numbers.")
 
             x = np.linspace(x_range[0], x_range[1], 1200)
@@ -115,7 +138,7 @@ class RobustDataScienceStudent(TUDarmstadtStudent):
             if plot_derivative:
                 plt.figure(figsize=(10, 6))
                 plt.plot(x, y, label=r"$y = e^{-x} \cos(x)$")
-                plt.plot(x, dy_dx, label=r"$\frac{dy}{dx}$", linestyle='--')
+                plt.plot(x, dy_dx, label=r"$\frac{dy}{dx}$", linestyle="--")
                 plt.xlabel(r"$x$")
                 plt.ylabel(r"$y$")
                 plt.legend()
@@ -138,15 +161,15 @@ class RobustDataScienceStudent(TUDarmstadtStudent):
         except Exception as e:
             raise e
 
-
-
     def solve_linear_system(self, A, b):
         try:
             A = np.array(A)
             b = np.array(b)
             if A.shape[0] != b.shape[0]:
                 raise ValueError("Dimensions of A and b must match.")
-            if not (np.issubdtype(A.dtype, np.number) and np.issubdtype(b.dtype, np.number)):
+            if not (
+                np.issubdtype(A.dtype, np.number) and np.issubdtype(b.dtype, np.number)
+            ):
                 raise ValueError("All elements in A and b must be numeric.")
 
             solution = np.linalg.solve(A, b)
@@ -167,13 +190,17 @@ class RobustDataScienceStudent(TUDarmstadtStudent):
             # X = np.c_[np.ones(X.shape[0]), X]
             y = np.array(y)
             if X.shape[0] <= X.shape[1]:
-                raise ValueError("Number of observations must exceed the number of variables.")
+                raise ValueError(
+                    "Number of observations must exceed the number of variables."
+                )
             if len(y) != X.shape[0]:
-                raise ValueError("Response vector y must be compatible with regressor matrix X.")
-            if not (np.issubdtype(X.dtype, np.number) and np.issubdtype(y.dtype, np.number)):
+                raise ValueError(
+                    "Response vector y must be compatible with regressor matrix X."
+                )
+            if not (
+                np.issubdtype(X.dtype, np.number) and np.issubdtype(y.dtype, np.number)
+            ):
                 raise ValueError("All elements in X and y must be numeric.")
-
-
 
             # Perform least squares
             beta = np.linalg.lstsq(X, y, rcond=None)[0]
@@ -183,20 +210,29 @@ class RobustDataScienceStudent(TUDarmstadtStudent):
             variance = np.var(residuals)
             mse = np.sqrt(variance * np.linalg.inv(X.T @ X).diagonal())
             t_stats = beta / mse
-            p_values = 2 * (1 - stats.t.cdf(np.abs(t_stats), df=X.shape[0] - X.shape[1]))
+            p_values = 2 * (
+                1 - stats.t.cdf(np.abs(t_stats), df=X.shape[0] - X.shape[1])
+            )
 
             results = [
-            [f"β{i+1}", b, t, p]
-            for i, (b, t, p) in enumerate(zip(beta, t_stats, p_values))
+                [f"β{i+1}", b, t, p]
+                for i, (b, t, p) in enumerate(zip(beta, t_stats, p_values))
             ]
 
             if print_results:
-                print(tabulate(results, headers=["Coefficient", "Value", "t-stat", "p-value"], tablefmt="pretty"))
+                print(
+                    tabulate(
+                        results,
+                        headers=["Coefficient", "Value", "t-stat", "p-value"],
+                        tablefmt="pretty",
+                    )
+                )
 
             return beta, t_stats, p_values
 
         except Exception as e:
             raise e
+
 
 if __name__ == "__main__":
     main()
