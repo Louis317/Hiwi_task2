@@ -185,23 +185,6 @@ class RobustDataScienceStudent(TUDarmstadtStudent):
             t_stats = beta / mse
             p_values = 2 * (1 - stats.t.cdf(np.abs(t_stats), df=X.shape[0] - X.shape[1]))
 
-            # beta = np.linalg.inv(X.T @ X) @ X.T @ y
-
-            # # Calculate residuals
-            # residuals = y - X @ beta
-
-            # # Calculate standard errors of the coefficients
-            # n, p = X.shape
-            # sigma_squared = np.sum(residuals**2) / (n - p)
-            # var_beta = sigma_squared * np.linalg.inv(X.T @ X)
-            # std_err_beta = np.sqrt(np.diag(var_beta))
-
-            # # Calculate t-statistics
-            # t_stats = beta / std_err_beta
-
-            # # Calculate p-values
-            # p_values = 2 * stats.t.sf(np.abs(t_stats), df=n-p)
-
             results = [
             [f"β{i+1}", b, t, p]
             for i, (b, t, p) in enumerate(zip(beta, t_stats, p_values))
