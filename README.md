@@ -36,7 +36,7 @@ Install the dependencies using:
 pip install numpy scipy tabulate matplotlib datetime
 ```
 
-
+<br />
 
 ## **1. TUDarmstadtStudent Class**
 
@@ -93,15 +93,16 @@ print("Updated Courses:", student.courses)
 print("Favorite Course:", student.favorite_course)
 ```
 
-
+<br />
 
 ## **2. RobustDataScienceStudent Class**
+
 
 ### **Overview**
 
 The RobustDataScienceStudent class inherits from TUDarmstadtStudent and provides additional numerical problem-solving methods.
 
-
+<br />
 
 ### **Method 1: Solve Integral Problem**
 
@@ -160,7 +161,7 @@ robust_student.integral_problem(x_range, x_stats, plot_derivative=True)
 | First Zero Crossing Index of x | 2.35196     |
 ```
 
-
+<br />
 
 ### **Method 2: Solve Linear Algebra Problem**
 
@@ -200,7 +201,7 @@ print(solution)
 +----------+---------------------+
 ```
 
-
+<br />
 
 ### **Method 3: Multivariate Least-Squares Regression**
 
@@ -242,7 +243,7 @@ print(result)
 |     β2      | 0.9999999999999991 | 1977778442196834.8 | 4.440892098500626e-16 |
 +-------------+--------------------+--------------------+-----------------------+
 ```
-
+<br />
 ## **Testing**
 
 Run unit tests to validate the functionality of the module:
@@ -257,4 +258,4 @@ The tests cover:
 
 ​	•	Statistical and numerical results for RobustDataScienceStudent methods.
 
-​	•	Input validation for all methods with errors messages that are clear and specific. 
+​	•	Input validation for all methods with errors messages that are clear and specific.
