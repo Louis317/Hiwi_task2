@@ -40,6 +40,30 @@ import datetime
 
 
 def main():
+    """Main function to demonstrate the capabilities of the RobustDataScienceStudent class.
+
+    This function performs the following tasks:
+    1. Creates an instance of RobustDataScienceStudent with predefined attributes.
+    2. Solves an integral problem over a specified range.
+    3. Solves a linear system of equations.
+    4. Generates synthetic data and solves a least squares problem.
+
+    The synthetic data generation is done using a fixed random seed for reproducibility.
+
+    Attributes:
+        student (RobustDataScienceStudent): An instance of the RobustDataScienceStudent class.
+        x_range (tuple): The range of x values for the integral problem.
+        x_stats (list): Statistics for the x values in the integral problem.
+        plot_derivative (bool): Whether to plot the derivative of the integral problem.
+        A (list): Coefficient matrix for the linear system.
+        b (list): Right-hand side vector for the linear system.
+        num_samples (int): Number of samples for synthetic data generation.
+        num_features (int): Number of features for synthetic data generation.
+        X (ndarray): Generated feature matrix.
+        true_beta (ndarray): True coefficients for the synthetic data.
+        y (ndarray): Generated response vector.
+        print_results (bool): Whether to print the results of the least squares problem.
+    """
     student = RobustDataScienceStudent(
         "Bob",
         24,
@@ -50,13 +74,13 @@ def main():
         "AI",
     )
 
-    # student.solve_integral_problem(
-    #     x_range=(0, 12), x_stats=[4, 7], plot_derivative=False
-    # )
+    student.solve_integral_problem(
+        x_range=(0, 12), x_stats=[4, 7], plot_derivative=False
+    )
 
-    # student.solve_linear_system(
-    #     A=[[3, 2, 3, 10], [2, -2, 5, 8], [3, 3, 4, 9], [3, 4, -3, -7]], b=[4, 1, 3, 2]
-    # )
+    student.solve_linear_system(
+        A=[[3, 2, 3, 10], [2, -2, 5, 8], [3, 3, 4, 9], [3, 4, -3, -7]], b=[4, 1, 3, 2]
+    )
 
     # Generate synthetic data
     np.random.seed(42)  # For reproducibility
@@ -64,8 +88,6 @@ def main():
     num_features = 3
     X = np.random.randn(num_samples, num_features)
     true_beta = np.random.randn(num_features)
-    print(true_beta)
-    # noise = np.random.randn(num_samples) * 0.1  # Add small noise
     y = X @ true_beta
     student.solve_least_squares(X, y, print_results=True)
 
@@ -413,4 +435,5 @@ class RobustDataScienceStudent(TUDarmstadtStudent):
 
 
 if __name__ == "__main__":
+    """Run main function to demonstrate RobustDataScienceStudent capabilities."""
     main()
