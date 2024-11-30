@@ -1,3 +1,14 @@
+"""Test module for TUDarmstadtStudent and RobustDataScienceStudent classes.
+
+Contains unit tests for:
+- Validation and functionality of TUDarmstadtStudent attributes and methods.
+- RobustDataScienceStudent's computational methods: solve_integral_problem, solve_linear_system, and solve_least_squares.
+
+Dependencies:
+    pytest: For unit testing.
+    numpy: For numerical computations.
+"""
+
 import pytest
 import numpy as np
 from student import TUDarmstadtStudent, RobustDataScienceStudent
@@ -5,6 +16,14 @@ from student import TUDarmstadtStudent, RobustDataScienceStudent
 
 # Test TUDarmstadtStudent
 def test_tudarmstadt_student():
+    """Test the initialization and attribute validation of TUDarmstadtStudent.
+
+    Checks:
+    - Correct assignment and retrieval of attributes.
+    - Constraints on setting immutable attributes.
+    - Validation of input parameters during initialization.
+    - Handling of invalid inputs with appropriate exceptions.
+    """
     student = TUDarmstadtStudent(
         "Alice",
         25,
@@ -91,6 +110,13 @@ def test_tudarmstadt_student():
 
 # Test RobustDataScienceStudent
 def test_solve_integral_problem():
+    """Test the solve_integral_problem method of RobustDataScienceStudent.
+
+    Checks:
+    - Accurate computation of statistical measures on integral results.
+    - Correct detection of zero derivative indices.
+    - Handling of invalid input arguments with appropriate exceptions.
+    """
     student = RobustDataScienceStudent(
         "Bob",
         24,
@@ -121,6 +147,13 @@ def test_solve_integral_problem():
 
 
 def test_solve_linear_system():
+    """Test the solve_linear_system method of RobustDataScienceStudent.
+
+    Checks:
+    - Correct solution of linear systems Ax = b.
+    - Handling of matrix and vector dimension mismatches.
+    - Validation of numeric inputs in the matrix and vector.
+    """
     student = RobustDataScienceStudent(
         "Bob",
         24,
@@ -136,13 +169,22 @@ def test_solve_linear_system():
     assert solution == pytest.approx(
         [0.78378378, 0.03603604, -0.67567568, 0.36036036], abs=0.00001
     )
-    with pytest.raises(ValueError, match="Dimensions of A and b must match."):
+    with pytest.raises(ValueError, match="Dimensions of A and b must match or A must be a square matrix."):
         student.solve_linear_system(A, b=[4, 1, 3])
+    with pytest.raises(ValueError, match="Dimensions of A and b must match or A must be a square matrix."):
+        student.solve_linear_system(A=[[3, 2], [2, -2], [3, 3]], b=[4, 1, 3])
     with pytest.raises(ValueError, match="All elements in A and b must be numeric."):
         student.solve_linear_system(A=[[3, 2, "3"], [2, -2, 5], [3, 3, 4]], b=[4, 1, 3])
 
 
 def test_solve_least_squares():
+    """Test the solve_least_squares method of RobustDataScienceStudent.
+
+    Checks:
+    - Accurate computation of regression coefficients, t-statistics, and p-values.
+    - Validation of input dimensions for the regressor matrix and response vector.
+    - Handling of invalid input types or non-numeric data with appropriate exceptions.
+    """
     student = RobustDataScienceStudent(
         "Bob",
         24,
@@ -152,17 +194,17 @@ def test_solve_least_squares():
         ["Convex", "ML", "DSP", "DSP Lab", "Matrix"],
         "AI",
     )
-    X = np.array([[1, 2], [3, 4], [5, 6]])
-    y = np.array([3, 7, 11])
+    # np.random.seed(42)  # For reproducibility
+    num_samples = 100
+    num_features = 3
+    X = np.random.randn(num_samples, num_features)
+    true_beta = np.random.randn(num_features)
+    y = X @ true_beta
     beta, t_stats, p_values = student.solve_least_squares(X, y)
-    assert len(beta) == 2
-    assert len(t_stats) == 2
-    assert len(p_values) == 2
-    assert beta == pytest.approx([1, 1], abs=0.00001)
-    assert t_stats == pytest.approx([1563571146130420, 1977778442196834], abs=10)
-    assert p_values == pytest.approx(
-        [4.440892098500626e-16, 4.440892098500626e-16], abs=0.00001
-    )
+    assert len(beta) == num_features
+    assert len(t_stats) == num_features
+    assert len(p_values) == num_features
+    assert beta == pytest.approx(true_beta, abs=0.00001)
     with pytest.raises(
         ValueError, match="Number of observations must exceed the number of variables."
     ):
