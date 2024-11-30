@@ -107,7 +107,7 @@ The RobustDataScienceStudent class inherits from TUDarmstadtStudent and provides
 ### **Method 1: Solve Integral Problem**
 
 ```python
-integral_problem(x_range, x_stats, plot_derivative=False)
+solve_integral_problem(x_range, x_stats, plot_derivative=False)
 ```
 
 ​	•	Compute $y = e^{-x} \cos(x)$ for a range $x$ .
@@ -145,7 +145,7 @@ robust_student = RobustDataScienceStudent(
 
 x_range = [0, 12]
 x_stats = [4, 7]
-robust_student.integral_problem(x_range, x_stats, plot_derivative=True)
+robust_student.solve_integral_problem(x_range, x_stats, plot_derivative=True)
 ```
 
 ![Figure_1](https://github.com/user-attachments/assets/e86ef0e0-2404-422e-aeb8-8a1b0862549f)
@@ -166,7 +166,7 @@ robust_student.integral_problem(x_range, x_stats, plot_derivative=True)
 ### **Method 2: Solve Linear Algebra Problem**
 
 ```python
-linear_algebra_problem(A, b)
+solve_linear_system(A, b)
 ```
 
 ​	•	Solve a system of linear equations $A \mathbf{V} = b$ , where $A$ is the coefficient matrix, and $b$ is the solution vector.
@@ -186,8 +186,7 @@ linear_algebra_problem(A, b)
 A = np.array([[3, 2, 3, 10], [2, -2, 5, 8], [3, 3, 4, 9], [3, 4, -3, -7]])
 b = np.array([4, 1, 3, 2])
 
-solution = robust_student.linear_algebra_problem(A, b)
-print(solution)
+robust_student.solve_linear_system(A, b)
 ```
 
 ```bash
@@ -206,7 +205,7 @@ print(solution)
 ### **Method 3: Multivariate Least-Squares Regression**
 
 ```python
-least_squares_regression(X, y, display_results=False)
+solve_least_squares(X, y, print_results=False)
 ```
 
 Perform multivariate least-squares regression with inputs $X$ (regressors) and $y$ (response) to calculate:
@@ -228,20 +227,23 @@ Perform multivariate least-squares regression with inputs $X$ (regressors) and $
 #### Example
 
 ```python
-X = [[1, 2], [3, 4], [5, 6]]
-y = [3, 7, 11]
-
-result = robust_student.least_squares_regression(X, y, display_results=True)
-print(result)
+np.random.seed(42)  # For reproducibility
+num_samples = 100
+num_features = 3
+X = np.random.randn(num_samples, num_features)
+true_beta = np.random.randn(num_features)
+y = X @ true_beta
+student.solve_least_squares(X, y, print_results=True)
 ```
 
 ```bash
-+-------------+--------------------+--------------------+-----------------------+
-| Coefficient |       Value        |       t-stat       |        p-value        |
-+-------------+--------------------+--------------------+-----------------------+
-|     β1      | 1.0000000000000009 | 1563571146130420.0 | 4.440892098500626e-16 |
-|     β2      | 0.9999999999999991 | 1977778442196834.8 | 4.440892098500626e-16 |
-+-------------+--------------------+--------------------+-----------------------+
++-------------+---------------------+-------------------------+---------+
+| Coefficient |        Value        |         t-stat          | p-value |
++-------------+---------------------+-------------------------+---------+
+|     β1      | -0.8289950109220728 | -2.183194870821761e+16  |   0.0   |
+|     β2      | -0.5601810401969698 | -1.7661434472438342e+16 |   0.0   |
+|     β3      | 0.7472936051232617  |  2.627354331366357e+16  |   0.0   |
++-------------+---------------------+-------------------------+---------+
 ```
 <br />
 
