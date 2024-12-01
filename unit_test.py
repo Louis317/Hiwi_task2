@@ -177,7 +177,8 @@ def test_solve_linear_system():
         student.solve_linear_system(A=[[3, 2, "3"], [2, -2, 5], [3, 3, 4]], b=[4, 1, 3])
 
 
-def test_solve_least_squares():
+@pytest.mark.parametrize("num_samples, num_features", [(100, 3), (50, 5), (20, 10)])
+def test_solve_least_squares(num_samples, num_features):
     """Test the solve_least_squares method of RobustDataScienceStudent.
 
     Checks:
@@ -195,8 +196,8 @@ def test_solve_least_squares():
         "AI",
     )
     # np.random.seed(42)  # For reproducibility
-    num_samples = 100
-    num_features = 3
+    # num_samples = 100
+    # num_features = 3
     X = np.random.randn(num_samples, num_features)
     true_beta = np.random.randn(num_features)
     y = X @ true_beta
