@@ -274,12 +274,11 @@ class RobustDataScienceStudent(TUDarmstadtStudent):
             plot_derivative (bool): If True, plots the derivative dy/dx, default is False.
 
         Returns:
-            dict: A dictionary containing:
-                - 'mean': Mean of y values in the statistical range.
-                - 'variance': Variance of y values in the statistical range.
-                - 'std_dev': Standard deviation of y values in the statistical range.
-                - 'threshold': Threshold value of y where 70% of values fall below.
-                - 'zero_index': Index of x where dy/dx equals zero.
+            - 'mean': Mean of y values in the statistical range.
+            - 'variance': Variance of y values in the statistical range.
+            - 'std_dev': Standard deviation of y values in the statistical range.
+            - 'threshold': Threshold value of y where 70% of values fall below.
+            - 'zero_index': Index of x where dy/dx equals zero.
 
         Raises:
             ValueError: If input arguments are invalid.
